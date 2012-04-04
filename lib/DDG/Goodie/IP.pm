@@ -1,9 +1,9 @@
-package DDG::Goodie::iploc;
+package DDG::Goodie::IP;
 
 use DDG::Goodie;
 use WWW::Curl::Simple;
 
-triggers start => "iploc";
+triggers start => "ip";
 
 zci is_cached => 1;
 
