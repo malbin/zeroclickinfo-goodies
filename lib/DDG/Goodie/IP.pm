@@ -9,12 +9,12 @@ triggers start => "ip";
 zci is_cached => 1;
 
 handle remainder => sub {
-    chomp($_);
-    if ($_ =~ m/^(\d\d?\d?)\.(\d\d?\d?)\.(\d\d?\d?)\.(\d\d?\d?)$/ )
+    chomp($_); # probably not necessary
+    if ($_ =~ m/^(\d\d?\d?)\.(\d\d?\d?)\.(\d\d?\d?)\.(\d\d?\d?)$/ ) # is this a valid IP format? if not, return normal results
     {
-        if ($1 <= 255 && $2 <= 255 && $3 <= 255 && $4 <= 255)
+        if ($1 <= 255 && $2 <= 255 && $3 <= 255 && $4 <= 255) # is the IP in range?
         {
-            if ($_ =~ m/^192.168./ || $_ =~ m/^10./ || $_ =~ m/^172.16./ || $_ =~ m/^127./)
+            if ($_ =~ m/^192.168./ || $_ =~ m/^10./ || $_ =~ m/^172.16./ || $_ =~ m/^127./) # is the IP local?
             {
                 return "Error: $_ is an internal IP.\n";
             }
@@ -27,7 +27,7 @@ handle remainder => sub {
                     $res = $res->decoded_content; 
                     $res =~ s/\;/|/g;
                     @res = split(/\|+/,$res);
-                    $res[3] =~ s/\b(\w)(\w*)/\U$1\L$2/g;
+                    $res[3] =~ s/\b(\w)(\w*)/\U$1\L$2/g; # Format output from curl
                     $res[4] =~ s/\b(\w)(\w*)/\U$1\L$2/g;
                     $res[5] =~ s/\b(\w)(\w*)/\U$1\L$2/g;
                     $res[6] =~ s/\b(\w)(\w*)/\U$1\L$2/g;
