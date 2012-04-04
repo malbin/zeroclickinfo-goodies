@@ -2,6 +2,7 @@ package DDG::Goodie::IP;
 
 use DDG::Goodie;
 use WWW::Curl::Simple;
+use Net::DNS;
 
 triggers start => "ip";
 
@@ -30,8 +31,12 @@ handle remainder => sub {
                     $res[4] =~ s/\b(\w)(\w*)/\U$1\L$2/g;
                     $res[5] =~ s/\b(\w)(\w*)/\U$1\L$2/g;
                     $res[6] =~ s/\b(\w)(\w*)/\U$1\L$2/g;
+                    
+                    my $hostname = gethostbyaddr(pack('C4',split('\.',$_)),2);
+
                     return "$res[5], $res[4] $res[6] - $res[3]\n
-                    Map: http://www.openstreetmap.org/?lat=$res[7]&lon=$res[8]&zoom=12&layers=M";
+                    Map: http://www.openstreetmap.org/?lat=$res[7]&lon=$res[8]&zoom=12&layers=M\n
+                    $hostname";
                 }
             else
             {
