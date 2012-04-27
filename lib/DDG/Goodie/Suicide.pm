@@ -5,8 +5,7 @@ use DDG::Goodie;
 triggers start => 'suicide';
 
 handle remainder => sub {
-    return 'Need help? In the U.S., call 1-800-273-8255/n
-            National Suicide Prevention Lifeline';
+    return 'Need help? In the U.S., call 1-800-273-8255 (National Suicide Prevention Lifeline)';
     return;
 };
 
